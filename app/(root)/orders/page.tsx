@@ -1,25 +1,12 @@
-"use client"
-import { useEffect, useState } from "react";
 import { getOrders } from "@/lib/actions/actions";
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 
-const Orders = () => {
-  const [orders, setOrders] = useState<OrderType[]>([]);
+const Orders = async () => {
   const { userId } = auth();
+  const orders = await getOrders(userId as string);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const orders = await getOrders(userId as string);
-        setOrders(orders);
-      } catch (error) {
-        console.error("[Orders] Error fetching orders:", error);
-      }
-    };
-
-    fetchOrders();
-  }, [userId]);
+  console.log(orders[0].products);
 
   return (
     <div className="px-10 py-5 max-sm:px-3">
@@ -92,3 +79,5 @@ const Orders = () => {
 };
 
 export default Orders;
+
+export const dynamic = "force-dynamic";
