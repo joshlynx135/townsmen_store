@@ -1,3 +1,4 @@
+"use client"
 import { useEffect, useState } from "react";
 import { getOrders } from "@/lib/actions/actions";
 import { auth } from "@clerk/nextjs";
